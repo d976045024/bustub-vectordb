@@ -65,6 +65,10 @@ class InsertExecutor : public AbstractExecutor {
   // Vector indexes on the insertion table, initialize it in the constructor.
   std::vector<VectorIndex *> indexes_;
 
+  TableInfo *table_info_{nullptr};
+
+  int insert_num_{0};
+
   // Reference to the insertion table heap, initialize it in the constructor.
   [[maybe_unused]] TableHeap *table_heap_;
 

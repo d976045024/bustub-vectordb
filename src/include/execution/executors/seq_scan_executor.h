@@ -53,6 +53,8 @@ class SeqScanExecutor : public AbstractExecutor {
   /** The sequential scan plan node to be executed */
   const SeqScanPlanNode *plan_;
 
+  TableInfo *table_info_{nullptr};
+
   // Reference to the table heap. Initialize it in the constructor.
   [[maybe_unused]] TableHeap *table_heap_;
 

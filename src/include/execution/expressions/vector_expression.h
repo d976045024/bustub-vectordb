@@ -10,6 +10,7 @@
 #include "fmt/format.h"
 #include "storage/table/tuple.h"
 #include "type/value_factory.h"
+#include "common/logger.h"
 
 namespace bustub {
 
@@ -20,18 +21,35 @@ inline auto ComputeDistance(const std::vector<double> &left, const std::vector<d
                             VectorExpressionType dist_fn) {
   auto sz = left.size();
   BUSTUB_ASSERT(sz == right.size(), "vector length mismatched!");
+  auto innerProduct = [&]() -> double {
+    double ans = 0.0;
+    for (size_t i = 0; i < left.size(); i++) {
+      ans += left[i] * right[i];
+    }
+    return ans;
+  };
+  LOG_DEBUG("compute distance %d\n", static_cast<int>(dist_fn));
   switch (dist_fn) {
     case VectorExpressionType::L2Dist: {
       // IMPLEMENT ME
-      return 0.0;
+      double l2sum = 0.0;
+      for (size_t i = 0; i < left.size(); i++) {
+        l2sum += pow(left[i] - right[i], 2);
+      }
+      return std::sqrt(l2sum);
     }
     case VectorExpressionType::InnerProduct: {
       // IMPLEMENT ME
-      return 1.0;
+      return -innerProduct();
     }
     case VectorExpressionType::CosineSimilarity: {
-      // IMPLEMENT ME
-      return 2.0;
+      double pow_sum_a = 0.0;
+      double pow_sum_b = 0.0;
+      for (size_t i = 0; i < left.size(); i++) {
+        pow_sum_a += pow(left[i], 2);
+        pow_sum_b += pow(right[i], 2);
+      }
+      return 1.0 - innerProduct() / (std::sqrt(pow_sum_a) * std::sqrt(pow_sum_b));
     }
     default:
       BUSTUB_ASSERT(false, "Unsupported vector expr type.");
