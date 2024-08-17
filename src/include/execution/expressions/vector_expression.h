@@ -28,7 +28,6 @@ inline auto ComputeDistance(const std::vector<double> &left, const std::vector<d
     }
     return ans;
   };
-  LOG_DEBUG("compute distance %d\n", static_cast<int>(dist_fn));
   switch (dist_fn) {
     case VectorExpressionType::L2Dist: {
       // IMPLEMENT ME
